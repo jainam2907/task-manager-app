@@ -60,17 +60,17 @@ Creates a new user in the database.
     -   **Data:** <br />
         ```
         {
-         {
-        6,
-        ",
-        ",
-        ",
-        ",
-        ",
-         1
-        },
-        g"
-        	}
+            "user": {
+                "age": 16,
+                "_id": "5f009ce5eff819425db63317",
+                "name": "Jainam Chhatbar",
+                "email": "jc@example.com",
+                "createdAt": "2020-07-04T15:14:45.383Z",
+                "updatedAt": "2020-07-04T15:14:45.445Z",
+                "__v": 1
+            },
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjAwOWNlNWVmZjgxOTQyNWRiNjMzMTciLCJpYXQiOjE1OTM4NzU2ODV9.AgB6hdvihuO6fN6NblMZ-1HnUnpnauX87oohi-ZTmMg"
+	    }
         ```
 
 -   **Error Response:**
