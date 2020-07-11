@@ -12,7 +12,6 @@ router.post('/users', async (req, res) => {
 	try {
 		await user.save();
 		const token = await user.generateAuthToken();
-		// res.send({user, token});
 		res.status(201).send({ user, token });
 	} catch (error) {
 		res.status(400).send(error);
@@ -38,7 +37,6 @@ router.post('/users/logout', auth, async (req, res) => {
 			token.token !== req.token;
 		});
 		await req.user.save();
-
 		res.send();
 	} catch (error) {
 		res.status(500).send();
@@ -57,7 +55,9 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 });
 
 router.get('/users/me', auth, async (req, res) => {
-	res.send(req.user);
+	const user = req.user;
+	const token = req.token;
+	res.send({ user, token });
 });
 
 router.patch('/users/me', auth, async (req, res) => {
@@ -73,13 +73,10 @@ router.patch('/users/me', auth, async (req, res) => {
 	}
 
 	try {
-		// const user = await User.findById(req.params.id);
-
 		updates.forEach((update) => {
 			req.user[update] = req.body[update];
 		});
 		await req.user.save();
-		// const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true});
 
 		res.send(req.user);
 	} catch (error) {
