@@ -25,7 +25,7 @@ test('Should signup a new user', async () => {
 			name: 'Jainam',
 			email: 'jainam@example.com',
 		},
-		token: user.tokens[0].token,
+		token: user.token,
 	});
 
 	// Assertion that the password is hashed before saving
@@ -43,7 +43,7 @@ test('Should login existing user', async () => {
 
 	// Assertion that new token is saved upon login
 	const user = await User.findById(response.body.user._id);
-	expect(user.tokens[1].token).toBe(response.body.token);
+	expect(user.token).toBe(response.body.token);
 });
 
 test('Should not login non-existent user', async () => {
@@ -59,7 +59,7 @@ test('Should not login non-existent user', async () => {
 test('Should get profile for authenticated user', async () => {
 	await request(app)
 		.get('/users/me')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send()
 		.expect(200);
 });
@@ -71,7 +71,7 @@ test('Should not get user profile unauthenticated user', async () => {
 test('Should delete account for authenticated user', async () => {
 	await request(app)
 		.delete('/users/me')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send()
 		.expect(200);
 
@@ -87,7 +87,7 @@ test('Should not delete account for unauthenticated user', async () => {
 test('Should upload avatar image', async () => {
 	await request(app)
 		.post('/users/me/avatar')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.attach('avatar', 'tests/fixtures/profile-pic.jpg')
 		.expect(200);
 
@@ -99,7 +99,7 @@ test('Should upload avatar image', async () => {
 test('Should update valid user fields', async () => {
 	await request(app)
 		.patch('/users/me')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({
 			name: 'NotMike',
 		})
@@ -113,7 +113,7 @@ test('Should update valid user fields', async () => {
 test('Should not update invalid user fields', async () => {
 	await request(app)
 		.patch('/users/me')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({
 			location: 'Paris',
 		})
@@ -156,7 +156,7 @@ test('Should not signup user with invalid password', async () => {
 test('Should not update invalid user name', async () => {
 	await request(app)
 		.patch('/users/me')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({
 			name: '',
 		})
@@ -170,7 +170,7 @@ test('Should not update invalid user name', async () => {
 test('Should not update invalid user email', async () => {
 	await request(app)
 		.patch('/users/me')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({
 			email: 'example.com',
 		})
@@ -184,7 +184,7 @@ test('Should not update invalid user email', async () => {
 test('Should not update invalid user password', async () => {
 	await request(app)
 		.patch('/users/me')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({
 			password: 'password',
 		})

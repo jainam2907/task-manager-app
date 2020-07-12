@@ -18,7 +18,7 @@ beforeEach(setUpDatabase);
 test('Should create task for user', async () => {
 	const response = await request(app)
 		.post('/tasks')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({ description: 'From my test' })
 		.expect(201);
 
@@ -33,7 +33,7 @@ test('Should create task for user', async () => {
 test('Should get tasks for user', async () => {
 	const response = await request(app)
 		.get('/tasks')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send()
 		.expect(200);
 
@@ -44,7 +44,7 @@ test('Should get tasks for user', async () => {
 test('Should not delete tasks owned by others', async () => {
 	await request(app)
 		.delete(`/tasks/${taskOne._id}`)
-		.set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userTwo.token}`)
 		.send()
 		.expect(404);
 
@@ -56,7 +56,7 @@ test('Should not delete tasks owned by others', async () => {
 test('Should not create task with invalid description', async () => {
 	await request(app)
 		.post('/tasks')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({
 			description: '',
 			completed: false,
@@ -67,7 +67,7 @@ test('Should not create task with invalid description', async () => {
 test('Should not create task with invalid completed value', async () => {
 	await request(app)
 		.post('/tasks')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({
 			description: 'Task for testing',
 			completed: 'No',
@@ -78,7 +78,7 @@ test('Should not create task with invalid completed value', async () => {
 test('Should not update task with invalid description', async () => {
 	await request(app)
 		.patch(`/tasks/${taskOne._id}`)
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({
 			description: '',
 		})
@@ -92,7 +92,7 @@ test('Should not update task with invalid description', async () => {
 test('Should not update task with invalid completed value', async () => {
 	await request(app)
 		.patch(`/tasks/${taskOne._id}`)
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send({
 			completed: 'No',
 		})
@@ -106,7 +106,7 @@ test('Should not update task with invalid completed value', async () => {
 test('Should delete user task', async () => {
 	await request(app)
 		.delete(`/tasks/${taskOne._id}`)
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send()
 		.expect(200);
 
@@ -126,7 +126,7 @@ test('Should not delete task if unauthenticated', async () => {
 test('Should not update tasks owned by others', async () => {
 	await request(app)
 		.patch(`/tasks/${taskOne._id}`)
-		.set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userTwo.token}`)
 		.send({
 			description: 'Anything',
 		})
@@ -140,7 +140,7 @@ test('Should not update tasks owned by others', async () => {
 test('Should fetch user task by id', async () => {
 	await request(app)
 		.get(`/tasks/${taskOne._id}`)
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send()
 		.expect(200);
 });
@@ -152,7 +152,7 @@ test('Should not fetch user task by id if unauthenticated', async () => {
 test('Should not fetch other users task by id', async () => {
 	await request(app)
 		.get(`/tasks/${taskOne._id}`)
-		.set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userTwo.token}`)
 		.send()
 		.expect(404);
 });
@@ -160,7 +160,7 @@ test('Should not fetch other users task by id', async () => {
 test('Should fetch only completed tasks', async () => {
 	const response = await request(app)
 		.get('/tasks?completed=true')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send()
 		.expect(200);
 
@@ -173,7 +173,7 @@ test('Should fetch only completed tasks', async () => {
 test('Should fetch only incomplete tasks', async () => {
 	const response = await request(app)
 		.get('/tasks?completed=false')
-		.set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+		.set('Authorization', `Bearer ${userOne.token}`)
 		.send()
 		.expect(200);
 

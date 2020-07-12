@@ -9,11 +9,7 @@ const userOne = {
 	name: 'Mike',
 	email: 'mike@example.com',
 	password: 'mikeisbest',
-	tokens: [
-		{
-			token: jwt.sign({ _id: userOneId }, process.env.JWT_SECRET),
-		},
-	],
+	token: jwt.sign({ _id: userOneId }, process.env.JWT_SECRET),
 };
 
 const userTwoId = new mongoose.Types.ObjectId();
@@ -22,11 +18,7 @@ const userTwo = {
 	name: 'Jess',
 	email: 'jess@example.com',
 	password: 'jessisbest',
-	tokens: [
-		{
-			token: jwt.sign({ _id: userTwoId }, process.env.JWT_SECRET),
-		},
-	],
+	token: jwt.sign({ _id: userTwoId }, process.env.JWT_SECRET),
 };
 
 const taskOne = {
