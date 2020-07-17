@@ -6,21 +6,27 @@ import Auth from './Auth';
 class Header extends React.Component {
 	renderMessage() {
 		if (!this.props.user) {
-			return 'Hello, Anonymous';
+			return (
+				<Link to="/" className="item">
+					<h3>Hello, Anonymous</h3>
+				</Link>
+			);
 		} else {
-			return `Hello, ${this.props.user.name}`;
+			return (
+				<Link to="/profile" className="item">
+					<h3>{`Hello, ${this.props.user.name}`}</h3>
+				</Link>
+			);
 		}
 	}
 	render() {
 		return (
 			<div className="ui secondary pointing menu">
 				<Link to="/" className="item">
-					Task Manager
+					<h3>Task Manager</h3>
 				</Link>
 				<div className="right menu">
-					<Link to="/" className="item">
-						{this.renderMessage()}
-					</Link>
+					{this.renderMessage()}
 					<Auth />
 				</div>
 			</div>

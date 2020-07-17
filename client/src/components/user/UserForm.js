@@ -1,9 +1,7 @@
 import React from 'react';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
-import { connect } from 'react-redux';
-import { signUp } from '../../actions';
+import { Field, reduxForm } from 'redux-form';
 
-class UserSignUp extends React.Component {
+class UserForm extends React.Component {
 	renderError({ error, touched }) {
 		if (touched && error) {
 			return (
@@ -51,36 +49,7 @@ class UserSignUp extends React.Component {
 	}
 
 	onSubmit = (formValues) => {
-		return new Promise((resolve) => setTimeout(resolve, 1)).then(
-			async () => {
-				const error = await this.props.signUp(formValues);
-
-				if (error) {
-					if (error.response.status === 400) {
-						console.log(error.response);
-
-						if (error.response.data.errors) {
-							if (
-								error.response.data.errors.email.properties
-									.message === 'Given Email is invalid!'
-							) {
-								throw new SubmissionError({
-									_error: 'Invalid email',
-								});
-							}
-						} else {
-							if (error.response.data.name === 'MongoError') {
-								if (error.response.data.code === 11000) {
-									throw new SubmissionError({
-										_error: 'Email already in use!',
-									});
-								}
-							}
-						}
-					}
-				}
-			}
-		);
+		this.props.onSubmit(formValues);
 	};
 
 	render = () => {
@@ -122,7 +91,7 @@ class UserSignUp extends React.Component {
 							type="submit"
 							disabled={submitting}
 						>
-							Create Account
+							Submit
 						</button>
 
 						<button
@@ -131,7 +100,7 @@ class UserSignUp extends React.Component {
 							disabled={pristine || submitting}
 							onClick={reset}
 						>
-							Clear Values
+							Clear
 						</button>
 					</div>
 				</div>
@@ -140,7 +109,7 @@ class UserSignUp extends React.Component {
 	};
 }
 
-const validate = (formValues) => {
+const validateForm = (formValues) => {
 	const errors = {};
 
 	if (!formValues.name) {
@@ -170,20 +139,7 @@ const validate = (formValues) => {
 	return errors;
 };
 
-const mapStateToProps = (state) => {
-	return {};
-};
-
-const mapDispatchToProps = {
-	signUp,
-};
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(
-	reduxForm({
-		form: 'SignUp',
-		validate: validate,
-	})(UserSignUp)
-);
+export default reduxForm({
+	form: 'userForm',
+	validate: validateForm,
+})(UserForm);

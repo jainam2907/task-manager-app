@@ -30,13 +30,16 @@ class Auth extends React.Component {
 			return null;
 		} else if (this.props.isSignedIn === true) {
 			return (
-				<div className="ui red button" onClick={this.onSignOutClick}>
+				<div
+					className="ui big red button"
+					onClick={this.onSignOutClick}
+				>
 					Logout
 				</div>
 			);
 		} else {
 			return (
-				<Link to="/signin" className="ui red button">
+				<Link to="/signin" className="ui big red button">
 					Login
 				</Link>
 			);

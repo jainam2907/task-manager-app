@@ -1,10 +1,10 @@
-import { LOG_IN, LOG_OUT } from '../actions/types';
+import { LOG_IN, LOG_OUT, UPDATE_USER } from '../actions/types';
 
 const INIT_STATE = {
 	isSignedIn: false,
 };
 
-const authReducer = (state = INIT_STATE, action) => {
+const userReducer = (state = INIT_STATE, action) => {
 	switch (action.type) {
 		case LOG_IN:
 			return {
@@ -15,9 +15,14 @@ const authReducer = (state = INIT_STATE, action) => {
 			};
 		case LOG_OUT:
 			return { ...state, isSignedIn: false, user: null, token: null };
+		case UPDATE_USER:
+			return {
+				...state,
+				user: action.payload,
+			};
 		default:
 			return state;
 	}
 };
 
-export default authReducer;
+export default userReducer;
