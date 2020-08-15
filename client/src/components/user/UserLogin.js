@@ -67,44 +67,47 @@ class UserLogin extends React.Component {
 	render = () => {
 		const { error, handleSubmit, pristine, reset, submitting } = this.props;
 		return (
-			<form
-				className="ui form error"
-				onSubmit={handleSubmit(this.onSubmit)}
-			>
-				<Field
-					name="email"
-					type="text"
-					component={this.renderInput}
-					label="Email"
-				/>
-				<Field
-					name="password"
-					type="password"
-					component={this.renderInput}
-					label="Password"
-				/>
-				<div>
-					{this.renderSubmitError(error)}
+			<React.Fragment>
+				<h3>Login to your account</h3>
+				<form
+					className="ui form error"
+					onSubmit={handleSubmit(this.onSubmit)}
+				>
+					<Field
+						name="email"
+						type="text"
+						component={this.renderInput}
+						label="Email"
+					/>
+					<Field
+						name="password"
+						type="password"
+						component={this.renderInput}
+						label="Password"
+					/>
 					<div>
-						<button
-							className="ui button primary"
-							type="submit"
-							disabled={submitting}
-						>
-							Log In
-						</button>
+						{this.renderSubmitError(error)}
+						<div>
+							<button
+								className="ui button primary"
+								type="submit"
+								disabled={submitting}
+							>
+								Log In
+							</button>
 
-						<button
-							className="ui button red"
-							type="button"
-							disabled={pristine || submitting}
-							onClick={reset}
-						>
-							Clear Values
-						</button>
+							<button
+								className="ui button red"
+								type="button"
+								disabled={pristine || submitting}
+								onClick={reset}
+							>
+								Clear Values
+							</button>
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</React.Fragment>
 		);
 	};
 }

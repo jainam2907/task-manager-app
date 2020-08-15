@@ -8,14 +8,20 @@ import UserUpdateAvatar from './user/UserUpdateAvatar';
 import UserDelete from './user/UserDelete';
 import history from '../history';
 import UserUpdate from './user/UserUpdate';
+import Home from './Home';
+import TaskList from './task/TaskList';
 
 const App = () => {
 	return (
-		<div className="ui container">
+		<div
+			className="ui container"
+			style={{ marginLeft: '5%', marginRight: '5%' }}
+		>
 			<Router history={history}>
 				<div>
 					<Header />
 					<Switch>
+						<Route path="/" exact={true} component={Home} />
 						<Route
 							path="/signup"
 							exact={true}
@@ -45,6 +51,11 @@ const App = () => {
 							path="/profile/delete"
 							exact={true}
 							component={UserDelete}
+						/>
+						<Route
+							path="/tasks"
+							exact={true}
+							component={TaskList}
 						/>
 					</Switch>
 				</div>

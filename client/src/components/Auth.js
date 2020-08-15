@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchUser, logOut } from '../actions';
+import '../styles/style.css';
 
 class Auth extends React.Component {
 	componentDidMount = () => {
@@ -31,15 +32,20 @@ class Auth extends React.Component {
 		} else if (this.props.isSignedIn === true) {
 			return (
 				<div
-					className="ui big red button"
+					className="ui medium button blue"
 					onClick={this.onSignOutClick}
+					// style={{ color: 'white', background: '#2980b9' }}
 				>
 					Logout
 				</div>
 			);
 		} else {
 			return (
-				<Link to="/signin" className="ui big red button">
+				<Link
+					to="/signin"
+					className="ui medium button blue"
+					// style={{ color: 'white', background: '#2980b9' }}
+				>
 					Login
 				</Link>
 			);

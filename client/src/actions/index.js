@@ -1,5 +1,12 @@
 import api from '../api';
-import { LOG_IN, LOG_OUT, UPDATE_USER } from './types';
+import {
+	LOG_IN,
+	LOG_OUT,
+	UPDATE_USER,
+	SAVE_TASKS,
+	ADD_TASK,
+	DELETE_TASK,
+} from './types';
 import history from '../history';
 
 export const signUp = (formValues) => {
@@ -97,7 +104,6 @@ export const deleteUser = (token) => {
 			});
 
 			if (response.status === 200) {
-				console.log('200 OK');
 				dispatch({
 					type: LOG_OUT,
 				});
@@ -119,7 +125,6 @@ export const updateUser = (token, formValues) => {
 			});
 
 			if (response.status === 200) {
-				console.log('200 OK');
 				dispatch({
 					type: UPDATE_USER,
 					payload: response.data,
@@ -128,6 +133,81 @@ export const updateUser = (token, formValues) => {
 			}
 		} catch (error) {
 			return error;
+		}
+	};
+};
+
+export const fetchTasks = (token) => {
+	return async (dispatch) => {
+		try {
+			const response = await api.get('/tasks', {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+
+			if (response.status === 200) {
+				dispatch({
+					type: SAVE_TASKS,
+					payload: response.data,
+				});
+			}
+		} catch (error) {}
+	};
+};
+
+export const addTask = (task, token) => {
+	return async (dispatch) => {
+		try {
+			const response = await api.post('/tasks', task, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			if (response.status === 201) {
+				dispatch({
+					type: ADD_TASK,
+					payload: response.data,
+				});
+			}
+		} catch (error) {}
+	};
+};
+
+export const deleteTask = (task, token) => {
+	return async (dispatch) => {
+		try {
+			const response = await api.delete(`/tasks/${task._id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			if (response.status === 200) {
+				dispatch({
+					type: DELETE_TASK,
+					payload: response.data,
+				});
+			}
+		} catch (error) {}
+	};
+};
+
+export const updateTask = (task, token) => {
+	return async (dispatch) => {
+		console.log(token);
+		try {
+			const response = await api.patch(`/tasks/${task._id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			console.log(response);
+			if (response.status === 200) {
+				console.log('200 OK');
+				console.log(response.data);
+			}
+		} catch (error) {
+			console.log(error.response.request);
 		}
 	};
 };

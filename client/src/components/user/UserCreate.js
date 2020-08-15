@@ -41,7 +41,7 @@ class UserCreate extends React.Component {
 	render() {
 		return (
 			<div>
-				<h3>Sign Up</h3>
+				<h3>Create new account</h3>
 				<UserForm onSubmit={this.onSubmit} />
 			</div>
 		);

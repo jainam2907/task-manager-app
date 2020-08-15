@@ -1,34 +1,94 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Navbar, Nav } from 'react-bootstrap';
 import Auth from './Auth';
 
 class Header extends React.Component {
-	renderMessage() {
+	renderProfileBtn() {
 		if (!this.props.user) {
 			return (
-				<Link to="/" className="item">
-					<h3>Hello, Anonymous</h3>
-				</Link>
+				<Navbar.Brand>
+					<Link
+						to="/signin"
+						style={{
+							color: '#2980b9',
+							textDecoration: 'none',
+							margin: 'auto 0',
+						}}
+					>
+						Profile
+					</Link>
+				</Navbar.Brand>
 			);
 		} else {
 			return (
-				<Link to="/profile" className="item">
-					<h3>{`Hello, ${this.props.user.name}`}</h3>
-				</Link>
+				<Navbar.Brand>
+					<Link
+						to="/profile"
+						style={{ color: '#2980b9', textDecoration: 'none' }}
+					>
+						Profile
+					</Link>
+				</Navbar.Brand>
 			);
 		}
 	}
+
+	renderTaskBtn() {
+		if (!this.props.user) {
+			return (
+				<Navbar.Brand>
+					<Link
+						to="/signin"
+						style={{
+							color: '#2980b9',
+							textDecoration: 'none',
+						}}
+					>
+						Tasks
+					</Link>
+				</Navbar.Brand>
+			);
+		} else {
+			return (
+				<Navbar.Brand>
+					<Link
+						to="/tasks"
+						style={{
+							color: '#2980b9',
+							textDecoration: 'none',
+						}}
+					>
+						Tasks
+					</Link>
+				</Navbar.Brand>
+			);
+		}
+	}
+
 	render() {
 		return (
-			<div className="ui secondary pointing menu">
-				<Link to="/" className="item">
-					<h3>Task Manager</h3>
-				</Link>
-				<div className="right menu">
-					{this.renderMessage()}
-					<Auth />
-				</div>
+			<div>
+				<Navbar bg="light" expand="sm" style={{ marginBottom: '2%' }}>
+					<Navbar.Brand>
+						<Link
+							to="/"
+							style={{ color: '#2980b9', textDecoration: 'none' }}
+						>
+							<h3>Task Manager</h3>
+						</Link>
+					</Navbar.Brand>
+					<Navbar.Toggle aria-controls="basic-navbar-nav" />
+					<Navbar.Collapse id="responsive-navbar-nav">
+						<Nav className="mr-auto"></Nav>
+						<Nav>
+							{this.renderTaskBtn()}
+							{this.renderProfileBtn()}
+							<Auth />
+						</Nav>
+					</Navbar.Collapse>
+				</Navbar>
 			</div>
 		);
 	}
