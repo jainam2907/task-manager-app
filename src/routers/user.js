@@ -104,7 +104,7 @@ router.post(
 
 		req.user.avatar = buffer;
 		await req.user.save();
-		res.send();
+		res.send(req.user);
 	},
 	(error, req, res, next) => {
 		res.status(400).send({ error: error.message });
